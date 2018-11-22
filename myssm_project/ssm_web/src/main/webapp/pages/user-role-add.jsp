@@ -116,14 +116,11 @@
 								<c:forEach items="${roleList}" var="role">
 									<tr>
 										<td>
-										
 										<input name="ids" type="checkbox" value="${role.id}">
-										
 										</td>
 										<td>${role.id}</td>
 										<td>${role.roleName }</td>
 										<td>${role.roleDesc}</td>
-										
 									</tr>
 								</c:forEach>
 							</tbody>

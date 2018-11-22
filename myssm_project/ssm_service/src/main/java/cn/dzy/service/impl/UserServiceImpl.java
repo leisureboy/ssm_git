@@ -22,11 +22,6 @@ public class UserServiceImpl implements IUserService {
     private IUserDao userDao;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-
-
-
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserInfo userInfo = null;
@@ -37,7 +32,9 @@ public class UserServiceImpl implements IUserService {
         }
         //处理自己的用户对象封装成UserDetails
         //  User user=new User(userInfo.getUsername(),"{noop}"+userInfo.getPassword(),getAuthority(userInfo.getRoles()));
-        User user = new User(userInfo.getUsername(),  userInfo.getPassword(), userInfo.getStatus() == 0 ? false : true, true, true, true, getAuthority(userInfo.getRoles()));
+        User user = new User(userInfo.getUsername(),  userInfo.getPassword(),
+                userInfo.getStatus() == 0 ? false : true, true, true, true,
+                getAuthority(userInfo.getRoles()));
         return user;
     }
 
@@ -66,5 +63,17 @@ public class UserServiceImpl implements IUserService {
     @Override
     public UserInfo findById(String id) {
         return userDao.findById(id);
+    }
+
+    @Override
+    public List<Role> findOtherRoles(String userId) {
+        return userDao.findOtherRoles(userId);
+    }
+
+    @Override
+    public void addRoleToUser(String userId, String[] roleIds) {
+        for(String roleId:roleIds){
+            userDao.addRoleToUser(userId,roleId);
+        }
     }
 }
